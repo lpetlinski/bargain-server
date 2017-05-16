@@ -15,7 +15,7 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'eclipse'
+apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 
 version = '0.0.1-SNAPSHOT'
@@ -63,7 +63,8 @@ task genJaxb {
 }
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
+	compile("org.springframework.boot:spring-boot-starter-security")
+	compile("org.springframework.boot:spring-boot-starter-data-mongodb")
     compile("org.springframework.boot:spring-boot-starter-web")
     compile("org.springframework.boot:spring-boot-starter")
     compile("org.springframework.ws:spring-ws-core")
@@ -78,4 +79,8 @@ jar {
 	version =  '0.1.0'
 
 	from genJaxb.classesDir
+}
+
+bootRun {
+	systemProperties System.properties
 }

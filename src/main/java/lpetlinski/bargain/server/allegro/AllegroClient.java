@@ -1,17 +1,24 @@
 package lpetlinski.bargain.server.allegro;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 import webservice.allegro.wsdl.*;
 
+@Component
 public class AllegroClient extends WebServiceGatewaySupport {
 
-    private static final int COUNTRY = 1; // TODO move to properties
+    @Value("${lpetlinski.bargain.server.allegro.webApiKey}")
+    private String webApiKey;
+
+    @Value("${lpetlinski.bargain.server.allegro.defaultCountry}")
+    private Integer defaultCountry;
 
     public DoGetItemsListResponse getItemsList(DoGetItemsListRequest request) {
 
-        request.setWebapiKey("aaa"); // TODO api key
+        request.setWebapiKey(webApiKey);
         if (request.getCountryId() == 0) {
-            request.setCountryId(COUNTRY);
+            request.setCountryId(defaultCountry);
         }
 
         return (DoGetItemsListResponse) getWebServiceTemplate().marshalSendAndReceive(request);
@@ -20,9 +27,9 @@ public class AllegroClient extends WebServiceGatewaySupport {
 
     public DoGetCountriesResponse getCountries(DoGetCountriesRequest request) {
 
-        request.setWebapiKey("aaa"); // TODO api key
+        request.setWebapiKey(webApiKey);
         if (request.getCountryCode() == 0) {
-            request.setCountryCode(COUNTRY);
+            request.setCountryCode(defaultCountry);
         }
 
         return (DoGetCountriesResponse) getWebServiceTemplate().marshalSendAndReceive(request);
