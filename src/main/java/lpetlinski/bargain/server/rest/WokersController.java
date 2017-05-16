@@ -6,11 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @ConditionalOnProperty("lpetlinski.bargain.server.runWorkers")
-@PreAuthorize("hasAuthority('ADMIN')")
-@RestController("/workers")
+@RestController
+@RequestMapping("/workers")
 public class WokersController {
 
     @Autowired
@@ -19,12 +20,14 @@ public class WokersController {
     @Autowired
     private RemoveOldAuctionsWorker _removeOldAuctionsWorker;
 
-    @RequestMapping("/runLoadWorker")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @RequestMapping(value = "/runLoadWorker", method = RequestMethod.POST)
     public void runLoadWorker() {
         _loadAuctionsWorker.loadData();
     }
 
-    @RequestMapping("/runRemoveOldAuctions")
+    @PreAuthorize("hasAuthority('ADMIN')")
+    @RequestMapping(value = "/runRemoveOldAuctions", method = RequestMethod.POST)
     public void runRemoveOldAuctions() {
         _removeOldAuctionsWorker.removeOldAuctions();
     }
