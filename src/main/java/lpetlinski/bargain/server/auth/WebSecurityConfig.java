@@ -20,7 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private AuthenticationProvider _authenticationProvider;
+    private AuthenticationProvider authenticationProvider;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -34,7 +34,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     @Qualifier("daoAuthenticationProvider")
     public void setAuthenticationProvider(AuthenticationProvider authenticationProvider) {
-        this._authenticationProvider = authenticationProvider;
+        this.authenticationProvider = authenticationProvider;
     }
 
     @Bean
@@ -54,6 +54,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureAuthManager(AuthenticationManagerBuilder authenticationManagerBuilder) {
-        authenticationManagerBuilder.authenticationProvider(_authenticationProvider);
+        authenticationManagerBuilder.authenticationProvider(authenticationProvider);
     }
 }

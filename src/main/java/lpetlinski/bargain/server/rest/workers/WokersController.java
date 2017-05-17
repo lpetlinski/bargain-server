@@ -1,4 +1,4 @@
-package lpetlinski.bargain.server.rest;
+package lpetlinski.bargain.server.rest.workers;
 
 import lpetlinski.bargain.server.cron.LoadAuctionsWorker;
 import lpetlinski.bargain.server.cron.RemoveOldAuctionsWorker;
@@ -15,20 +15,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class WokersController {
 
     @Autowired
-    private LoadAuctionsWorker _loadAuctionsWorker;
+    private LoadAuctionsWorker loadAuctionsWorker;
 
     @Autowired
-    private RemoveOldAuctionsWorker _removeOldAuctionsWorker;
+    private RemoveOldAuctionsWorker removeOldAuctionsWorker;
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/runLoadWorker", method = RequestMethod.POST)
     public void runLoadWorker() {
-        _loadAuctionsWorker.loadData();
+        loadAuctionsWorker.loadData();
     }
 
     @PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/runRemoveOldAuctions", method = RequestMethod.POST)
     public void runRemoveOldAuctions() {
-        _removeOldAuctionsWorker.removeOldAuctions();
+        removeOldAuctionsWorker.removeOldAuctions();
     }
 }

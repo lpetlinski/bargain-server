@@ -1,7 +1,7 @@
 package lpetlinski.bargain.server.cron;
 
-import lpetlinski.bargain.server.domain.Auction;
-import lpetlinski.bargain.server.domain.NotInterestingAuction;
+import lpetlinski.bargain.server.domain.searchitem.Auction;
+import lpetlinski.bargain.server.domain.searchitem.NotInterestingAuction;
 import lpetlinski.bargain.server.repository.SearchItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class RemoveOldAuctionsWorker {
 
     @Autowired
-    private SearchItemRepository _searchItemRepository;
+    private SearchItemRepository searchItemRepository;
 
     @Scheduled(cron = "0 0 0 * * *")
     public void removeOldAuctions() {
@@ -27,21 +27,21 @@ public class RemoveOldAuctionsWorker {
 
     private void removeAuctions() {
         Date today = new Date();
-        _searchItemRepository.findByAuctionsEndTimeLessThan(today).forEach(item -> {
+        searchItemRepository.findByAuctionsEndTimeLessThan(today).forEach(item -> {
             List<Auction> oldAuctions = item.getAuctions().stream().filter(a -> a.getEndTime().before(today)).collect(
                     Collectors.toList());
             item.getAuctions().removeAll(oldAuctions);
-            _searchItemRepository.save(item);
+            searchItemRepository.save(item);
         });
     }
 
     private void removeNotInterestingAuctions() {
         Date today = new Date();
-        _searchItemRepository.findByNotInterestingAuctionsEndTimeLessThan(today).forEach(item -> {
+        searchItemRepository.findByNotInterestingAuctionsEndTimeLessThan(today).forEach(item -> {
             List<NotInterestingAuction> oldAuctions = item.getNotInterestingAuctions().stream().filter(a -> a.getEndTime().before(today)).collect(
                     Collectors.toList());
             item.getNotInterestingAuctions().removeAll(oldAuctions);
-            _searchItemRepository.save(item);
+            searchItemRepository.save(item);
         });
     }
 }

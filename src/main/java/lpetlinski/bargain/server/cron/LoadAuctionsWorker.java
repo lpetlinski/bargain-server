@@ -3,8 +3,8 @@ package lpetlinski.bargain.server.cron;
 import lpetlinski.bargain.server.allegro.AllegroClient;
 import lpetlinski.bargain.server.allegro.builders.GetItemsListBuilder;
 import lpetlinski.bargain.server.allegro.builders.SearchFilterBuilder;
-import lpetlinski.bargain.server.domain.Auction;
-import lpetlinski.bargain.server.domain.SearchItem;
+import lpetlinski.bargain.server.domain.searchitem.Auction;
+import lpetlinski.bargain.server.domain.searchitem.SearchItem;
 import lpetlinski.bargain.server.repository.SearchItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -21,16 +21,16 @@ import java.util.stream.Collectors;
 public class LoadAuctionsWorker {
 
     @Autowired
-    private SearchItemRepository _searchItemRepository;
+    private SearchItemRepository searchItemRepository;
 
     @Autowired
-    private AllegroClient _allegroClient;
+    private AllegroClient allegroClient;
 
     @Scheduled(cron = "0 0 * * * *")
     public void loadData() {
-        _searchItemRepository.findAll(new PageRequest(0, 5)).forEach((searchItem -> {
+        searchItemRepository.findAll(new PageRequest(0, 5)).forEach((searchItem -> {
             findAuctionsForSearchItem(searchItem);
-            _searchItemRepository.save(searchItem);
+            searchItemRepository.save(searchItem);
         }));
     }
 
@@ -46,7 +46,7 @@ public class LoadAuctionsWorker {
     }
 
     private DoGetItemsListResponse findAuctions(String query) {
-        return _allegroClient.getItemsList(
+        return allegroClient.getItemsList(
                 new GetItemsListBuilder().withFilter(new SearchFilterBuilder().withSearchValue(query)).build());
     }
 

@@ -1,6 +1,6 @@
 package lpetlinski.bargain.server.auth;
 
-import lpetlinski.bargain.server.domain.User;
+import lpetlinski.bargain.server.domain.user.User;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,7 +16,7 @@ public class UserToUserDetails implements Converter<User, UserDetails> {
         UserDetailsImpl userDetails = new UserDetailsImpl();
 
         if(user != null) {
-            userDetails.setUsername(user.getName());
+            userDetails.setUsername(user.getUsername());
             userDetails.setPassword(user.getEncryptedPassword());
             userDetails.setEnabled(user.getEnabled());
             Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();

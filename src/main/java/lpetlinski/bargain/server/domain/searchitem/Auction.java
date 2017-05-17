@@ -1,81 +1,84 @@
-package lpetlinski.bargain.server.domain;
+package lpetlinski.bargain.server.domain.searchitem;
 
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 public class Auction {
-    private Long _offerId;
-    private String _title;
-    private int _count;
-    private Date _endTime;
-    private float _buyNowPrice;
-    private float _withDeliveryPrice;
-    private float _biddingPrice;
-    private List<String> _photos = new ArrayList<>();
+    @NotNull
+    private Long offerId;
+    @NotNull
+    private String title;
+    private int count;
+    private Date endTime;
+    private float buyNowPrice;
+    private float withDeliveryPrice;
+    private float biddingPrice;
+    private List<String> photos = new ArrayList<>();
 
     public String getTitle() {
-        return _title;
+        return title;
     }
 
     public void setTitle(String title) {
-        _title = title;
+        this.title = title;
     }
 
     public int getCount() {
-        return _count;
+        return count;
     }
 
     public void setCount(int count) {
-        _count = count;
+        this.count = count;
     }
 
     public Date getEndTime() {
-        return _endTime;
+        return endTime;
     }
 
     public void setEndTime(Date endTime) {
-        _endTime = endTime;
+        this.endTime = endTime;
     }
 
     public float getBuyNowPrice() {
-        return _buyNowPrice;
+        return buyNowPrice;
     }
 
     public void setBuyNowPrice(float buyNowPrice) {
-        _buyNowPrice = buyNowPrice;
+        this.buyNowPrice = buyNowPrice;
     }
 
     public List<String> getPhotos() {
-        return _photos;
+        return photos;
     }
 
     public void setPhotos(List<String> photos) {
-        _photos = photos;
+        this.photos = photos;
     }
 
     public Long getOfferId() {
-        return _offerId;
+        return offerId;
     }
 
     public void setOfferId(Long offerId) {
-        _offerId = offerId;
+        this.offerId = offerId;
     }
 
     public float getWithDeliveryPrice() {
-        return _withDeliveryPrice;
+        return withDeliveryPrice;
     }
 
     public void setWithDeliveryPrice(float withDeliveryPrice) {
-        _withDeliveryPrice = withDeliveryPrice;
+        this.withDeliveryPrice = withDeliveryPrice;
     }
 
     public float getBiddingPrice() {
-        return _biddingPrice;
+        return biddingPrice;
     }
 
     public void setBiddingPrice(float biddingPrice) {
-        _biddingPrice = biddingPrice;
+        this.biddingPrice = biddingPrice;
     }
 
 }

@@ -1,4 +1,4 @@
-package lpetlinski.bargain.server.domain;
+package lpetlinski.bargain.server.domain.user;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
@@ -12,64 +12,64 @@ import java.util.List;
 @Document(collection = "users")
 public class User {
     @Id
-    private String _id;
+    private String id;
     @NotNull
     @Indexed(unique = true)
-    private String _name;
+    private String username;
     @Transient
-    private String _password;
+    private String password;
     @NotNull
-    private String _encryptedPassword;
+    private String encryptedPassword;
     @NotNull
-    private List<String> _roles = new ArrayList<>();
+    private List<String> roles = new ArrayList<>();
     @NotNull
-    private Boolean _enabled = true;
+    private Boolean enabled = true;
 
     public String getId() {
-        return _id;
+        return id;
     }
 
     public void setId(String id) {
-        _id = id;
+        this.id = id;
     }
 
-    public String getName() {
-        return _name;
+    public String getUsername() {
+        return username;
     }
 
-    public void setName(String name) {
-        _name = name;
+    public void setUsername(String name) {
+        username = name;
     }
 
     public String getPassword() {
-        return _password;
+        return password;
     }
 
     public void setPassword(String password) {
-        _password = password;
+        this.password = password;
     }
 
     public String getEncryptedPassword() {
-        return _encryptedPassword;
+        return encryptedPassword;
     }
 
     public void setEncryptedPassword(String encryptedPassword) {
-        _encryptedPassword = encryptedPassword;
+        this.encryptedPassword = encryptedPassword;
     }
 
     public List<String> getRoles() {
-        return _roles;
+        return roles;
     }
 
     public void setRoles(List<String> roles) {
-        _roles = roles;
+        this.roles = roles;
     }
 
     public Boolean getEnabled() {
-        return _enabled;
+        return enabled;
     }
 
     public void setEnabled(Boolean enabled) {
-        _enabled = enabled;
+        this.enabled = enabled;
     }
 }
