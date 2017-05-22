@@ -6,6 +6,8 @@ import lpetlinski.bargain.server.allegro.builders.SearchFilterBuilder;
 import lpetlinski.bargain.server.domain.searchitem.Auction;
 import lpetlinski.bargain.server.domain.searchitem.SearchItem;
 import lpetlinski.bargain.server.repository.SearchItemRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +21,7 @@ import java.util.stream.Collectors;
 @ConditionalOnProperty("lpetlinski.bargain.server.runWorkers")
 @Component
 public class LoadAuctionsWorker {
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private SearchItemRepository searchItemRepository;
@@ -28,10 +31,13 @@ public class LoadAuctionsWorker {
 
     @Scheduled(cron = "0 0 * * * *")
     public void loadData() {
+        logger.info("Starting loading data");
         searchItemRepository.findAll(new PageRequest(0, 5)).forEach((searchItem -> {
+            logger.info("Loading data for: " + searchItem.getId());
             findAuctionsForSearchItem(searchItem);
             searchItemRepository.save(searchItem);
         }));
+        logger.info("Finished loading data");
     }
 
     private void findAuctionsForSearchItem(SearchItem searchItem) {

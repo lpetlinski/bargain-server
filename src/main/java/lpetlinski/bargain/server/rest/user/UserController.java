@@ -46,6 +46,7 @@ public class UserController {
 
     @RequestMapping(path = "/changePassword", method = RequestMethod.POST)
     public void changePassword(Principal principal, @RequestBody String newPassword) {
+        newPassword = newPassword.replace("\"", "");
         _userService.changePassword(principal.getName(), newPassword);
     }
 

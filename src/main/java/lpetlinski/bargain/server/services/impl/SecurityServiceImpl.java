@@ -5,11 +5,12 @@ import lpetlinski.bargain.server.repository.SearchItemRepository;
 import lpetlinski.bargain.server.services.SecurityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 
-@Service
+@Service("securityService")
 public class SecurityServiceImpl implements SecurityService {
 
     @Autowired
@@ -20,8 +21,14 @@ public class SecurityServiceImpl implements SecurityService {
         if(authentication.getAuthorities().stream().anyMatch(auth -> "ADMIN".equals(auth.getAuthority()))) {
             return true;
         }
+        if(id == null) {
+            return false;
+        }
         SearchItem item = searchItemRepository.findByIdWithUsername(id);
-        Principal principal = (Principal)authentication.getPrincipal();
-        return item.getUsername().equals(principal.getName());
+        if(item == null) {
+            return false;
+        }
+        UserDetails principal = (UserDetails)authentication.getPrincipal();
+        return item.getUsername().equals(principal.getUsername());
     }
 }

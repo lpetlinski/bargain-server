@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 @ConditionalOnProperty("lpetlinski.bargain.server.runWorkers")
 @RestController
 @RequestMapping("/workers")
-public class WokersController {
+public class WorkersController {
 
     @Autowired
     private LoadAuctionsWorker loadAuctionsWorker;

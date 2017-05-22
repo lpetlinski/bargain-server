@@ -46,12 +46,14 @@ public class SearchItemController {
     @PreAuthorize("@securityService.canSeeSearchItem(authentication, #id)")
     @RequestMapping(path = "/{id}/query", method = RequestMethod.PUT)
     public void addQuery(@PathVariable("id") String id, @RequestBody String query) {
+        query = query.replace("\"", "");
         searchItemService.addQueryToSearchItem(id, query);
     }
 
     @PreAuthorize("@securityService.canSeeSearchItem(authentication, #id)")
     @RequestMapping(path = "/{id}/query", method = RequestMethod.DELETE)
     public void deleteQuery(@PathVariable("id") String id, @RequestBody String query) {
+        query = query.replace("\"", "");
         searchItemService.removeQueryFromSearchItem(id, query);
     }
 

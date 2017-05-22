@@ -71,6 +71,9 @@ dependencies {
 
 	compile(files(genJaxb.classesDir).builtBy(genJaxb))
 
+	testCompile("org.springframework.boot:spring-boot-starter-test")
+	testCompile("de.flapdoodle.embed:de.flapdoodle.embed.mongo")
+
 	jaxb "com.sun.xml.bind:jaxb-xjc:2.1.7"
 }
 
